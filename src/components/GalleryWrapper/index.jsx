@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import StackGrid from 'react-stack-grid';
 import loader from '../../assets/svg/loader.svg';
+import { Route, Link } from 'react-router-dom'
 
 class GalleryWrapper extends Component {
 
@@ -55,28 +56,38 @@ class GalleryWrapper extends Component {
                                     onChange={this.updateSearch}
                                 />
                             </div>
-                            <StackGrid
-                                columnWidth={250}
-                                gridRef={grid => this.grid = grid}
-                            >
-                            {
-                                albumsList.length ? albumsList.filter(el => el.title.includes(searchInput)).map( (el, index) => 
-                                    <div key={index} style={{
-                                            padding: '2em',
-                                            textAlign: 'center',
-                                            background: this.generateColor(),
-                                            margin: '0.5em',
+                            <div  style={{
+                                padding: '2em'
+                            }}>
+                                <StackGrid
+                                    columnWidth={250}
+                                    gridRef={grid => this.grid = grid}
+                                >
+                                {
+                                    albumsList.length ? albumsList.filter(el => el.title.includes(searchInput)).map( (el, index) => 
+                                        
+                                        <Link key={el.id} style={{
                                             color: 'white',
-                                            fontSize: '21px',
-                                            borderRadius: '0.5em'
-                                        }}
-                                    >
-                                        {el.title}
-                                    </div>
-                                ) :
-                                null
-                            }
-                            </StackGrid>
+                                            textDecoration: 'none'
+                                        }} to={`/photos/${el.id}`}>
+                                            <div style={{
+                                                padding: '2em',
+                                                textAlign: 'center',
+                                                background: this.generateColor(),
+                                                margin: '0.5em',
+                                                fontSize: '21px',
+                                                borderRadius: '0.5em',
+                                                cursor: 'pointer'
+                                            }}
+                                            >
+                                                {el.title}
+                                            </div>
+                                        </Link>
+                                    ) :
+                                    null
+                                }
+                                </StackGrid>
+                            </div>
                         </div> :
                     <img src={loader} alt="loader" style={{
                         width: '6em',
